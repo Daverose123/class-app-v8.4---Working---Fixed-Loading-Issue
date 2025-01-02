@@ -1,0 +1,3166 @@
+:root {
+    --primary-color: #2ec4b6;
+    --accent-light: #cbf3f0;
+    --accent-yellow: #ffbf69;
+    --accent-orange: #ff9f1c;
+}
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.sidebar-header {
+    padding: 1rem 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.learning-spaces-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1rem 0;
+}
+
+.sidebar-footer {
+    padding: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.sidebar-footer .btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.9em;
+    height: 32px;
+}
+
+.sidebar-footer .btn i {
+    margin-right: 0.5rem;
+    font-size: 1em;
+}
+
+/* Collapsed state for footer buttons */
+.sidebar.collapsed .sidebar-footer {
+    padding: 0.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sidebar.collapsed .sidebar-footer .btn {
+    padding: 0.5rem;
+    justify-content: center;
+    width: 100%;
+}
+
+.sidebar.collapsed .sidebar-footer .btn span {
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-footer .btn i {
+    margin: 0;
+}
+
+/* Tooltip for collapsed buttons */
+.sidebar.collapsed .btn[data-title]:hover::after {
+    content: attr(data-title);
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    margin-left: 0.5rem;
+    font-size: 0.9em;
+    white-space: nowrap;
+    z-index: 1000;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 1rem;
+    background-color: white;
+}
+
+/* Widget Styles */
+.widget {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 1rem;
+    position: absolute;
+    min-width: 150px;
+    min-height: 100px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.widget-header {
+    cursor: move;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 0.5rem;
+    flex-shrink: 0;
+}
+
+.widget-content {
+    flex-grow: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 0;
+}
+
+/* Clock Widget Specific Styles */
+.clock-widget .widget-content {
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.clock-widget .time {
+    font-weight: bold;
+    line-height: 1.2;
+    margin: 0;
+    transition: font-size 0.2s ease;
+}
+
+/* Text size variations */
+.clock-widget .time[data-size="small"] {
+    font-size: min(2.5em, calc(100% + 1.5vw));
+}
+
+.clock-widget .time[data-size="medium"] {
+    font-size: min(4em, calc(100% + 2vw));
+}
+
+.clock-widget .time[data-size="large"] {
+    font-size: min(5.5em, calc(100% + 2.5vw));
+}
+
+.clock-widget .time[data-size="x-large"] {
+    font-size: min(7em, calc(100% + 3vw));
+}
+
+/* Add styles for the clock icon in header */
+.clock-widget .widget-header span i {
+    color: #6c757d;
+    font-size: 1.1em;
+}
+
+/* Widget Controls */
+.widget-controls {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: flex;
+    gap: 0.25rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.widget:hover .widget-controls {
+    opacity: 1;
+}
+
+.widget-controls button {
+    background: none;
+    border: none;
+    color: #6c757d;
+    padding: 0.25rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.widget-controls button:hover {
+    color: var(--primary-color);
+}
+
+.widget-settings,
+.widget-remove {
+    font-size: 0.875rem;
+}
+
+/* Resizable Handle Styles */
+.ui-resizable-handle {
+    background: var(--primary-color);
+    border: none;
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.widget:hover .ui-resizable-handle {
+    opacity: 1;
+}
+
+/* Corner resize handle */
+.ui-resizable-se {
+    right: -3px;
+    bottom: -3px;
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: se-resize;
+}
+
+/* Edge resize handles */
+.ui-resizable-e,
+.ui-resizable-s {
+    background: var(--primary-color);
+    width: 4px;
+    height: 4px;
+}
+
+.ui-resizable-e {
+    right: -2px;
+}
+
+.ui-resizable-s {
+    bottom: -2px;
+}
+
+/* Handle hover effects */
+.ui-resizable-handle:hover {
+    background: #25a093;  /* Darker shade of primary color */
+}
+
+/* Add these styles for the space items */
+.space-item {
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    position: relative;
+    border-left: 3px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.space-item:hover {
+    background-color: var(--accent-light);
+}
+
+.space-item .space-name {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.space-item .remove-space-btn {
+    opacity: 0;
+    transition: opacity 0.2s;
+    padding: 0.25rem 0.5rem;
+}
+
+.space-item:hover .remove-space-btn {
+    opacity: 1;
+}
+
+.space-item .remove-space-btn:hover {
+    color: #dc3545 !important;
+}
+
+.space-item.active {
+    border-left-color: var(--primary-color);
+    background-color: var(--accent-light);
+}
+
+/* Settings modal custom styles */
+.settings-row {
+    padding: 0.5rem 0;
+}
+
+.settings-row .form-control-color {
+    width: 50px;
+}
+
+/* Weather Widget Styles */
+.weather-widget {
+    padding: 0 !important;
+    cursor: move;
+}
+
+.weather-widget .widget-content {
+    padding: 0.25rem;
+}
+
+.weather-widget .weather-content {
+    padding: 0.25rem;
+}
+
+.weather-widget .location {
+    margin-bottom: 0.25rem;
+}
+
+.weather-widget .weather-main {
+    gap: 0.25rem;
+    margin: 0;
+}
+
+.weather-widget .description {
+    margin: 0.25rem 0;
+}
+
+.weather-widget .details {
+    margin-top: 0.25rem;
+}
+
+.weather-widget .widget-header {
+    padding: 0.25rem;
+}
+
+.weather-widget img {
+    width: 64px;
+    height: 64px;
+}
+
+/* Add to Weather Widget Styles */
+.display-options {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0.5rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+.display-options .form-check {
+    margin-bottom: 0.5rem;
+}
+
+.display-options .form-check:last-child {
+    margin-bottom: 0;
+}
+
+/* Adjust weather content spacing */
+.weather-widget .weather-content > * {
+    margin-bottom: 0.5rem;
+}
+
+.weather-widget .weather-content > *:last-child {
+    margin-bottom: 0;
+}
+
+.weather-widget .details:empty {
+    display: none;
+}
+
+/* Add size variations for weather widget */
+.weather-widget .weather-content[data-size="small"] {
+    font-size: 0.8em;
+}
+
+.weather-widget .weather-content[data-size="small"] .temperature {
+    font-size: 2em;
+}
+
+.weather-widget .weather-content[data-size="small"] img {
+    width: 48px;
+    height: 48px;
+}
+
+.weather-widget .weather-content[data-size="medium"] {
+    font-size: 1em;
+}
+
+.weather-widget .weather-content[data-size="medium"] .temperature {
+    font-size: 2.5em;
+}
+
+.weather-widget .weather-content[data-size="medium"] img {
+    width: 64px;
+    height: 64px;
+}
+
+.weather-widget .weather-content[data-size="large"] {
+    font-size: 1.2em;
+}
+
+.weather-widget .weather-content[data-size="large"] .temperature {
+    font-size: 3em;
+}
+
+.weather-widget .weather-content[data-size="large"] img {
+    width: 80px;
+    height: 80px;
+}
+
+.weather-widget .weather-content[data-size="x-large"] {
+    font-size: 1.4em;
+}
+
+.weather-widget .weather-content[data-size="x-large"] .temperature {
+    font-size: 3.5em;
+}
+
+.weather-widget .weather-content[data-size="x-large"] img {
+    width: 96px;
+    height: 96px;
+}
+
+/* Add Space Header Styles */
+.space-header h2 {
+    color: var(--primary-color);
+    font-weight: 500;
+    margin: 0;
+    padding: 0.5rem 0;
+}
+
+.space-header {
+    border-bottom: 2px solid var(--accent-light);
+    margin-bottom: 1.5rem !important;
+}
+
+.space-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.space-controls .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.space-controls .btn-primary:hover {
+    background-color: #25a093;
+    border-color: #25a093;
+}
+
+/* Update space item styles */
+.space-item-controls {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.space-item-controls .btn-link {
+    padding: 0.25rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.space-item:hover .space-item-controls .btn-link {
+    opacity: 1;
+}
+
+.space-settings-btn {
+    color: var(--primary-color) !important;
+}
+
+.space-settings-btn:hover {
+    color: #25a093 !important;
+}
+
+/* Space title and central idea styles */
+.space-title {
+    flex-grow: 1;
+    max-width: 80%; /* Ensure space for the add widget button */
+}
+
+.central-idea {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.central-idea-label {
+    color: var(--primary-color);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.central-idea-text {
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-style: italic;
+    flex-grow: 1;
+}
+
+/* School Info Styles */
+.school-info {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.school-logo {
+    margin-bottom: 1rem;
+    max-width: 120px;
+    margin: 0 auto 1rem;
+    display: none; /* Hide by default */
+}
+
+.school-logo.has-logo {
+    display: block;
+}
+
+.school-logo img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.school-details {
+    padding: 0 0.5rem;
+}
+
+.school-details h3 {
+    color: var(--primary-color);
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.class-name {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.class-name:empty {
+    display: none;
+}
+
+/* Empty logo placeholder */
+.school-logo:empty {
+    display: none;
+}
+
+/* Widget Selection Grid Styles */
+.widget-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    padding: 0.5rem;
+}
+
+.widget-option {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.widget-option:hover {
+    background: var(--accent-light);
+    border-color: var(--primary-color);
+}
+
+.widget-option-icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.widget-option-content h4 {
+    font-size: 0.9rem;
+    margin: 0 0 0.25rem 0;
+}
+
+.widget-option-content p {
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* Custom SweetAlert styles for widget selection */
+.swal2-popup {
+    padding: 1.5rem;
+}
+
+.swal2-popup .swal2-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Make sure dialog content is visible */
+.swal2-html-container {
+    margin: 0;
+    padding: 1rem;
+}
+
+/* Materials Widget Styles */
+.materials-widget .materials-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+
+.materials-widget .materials-title {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.materials-widget .materials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 1rem;
+    padding: 0.5rem;
+    overflow-y: auto;
+}
+
+.materials-widget .material-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem;
+    border: 1px solid;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.materials-widget .material-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.materials-widget .material-icon {
+    font-size: 1.5em;
+    margin-bottom: 0.5rem;
+}
+
+.materials-widget .material-name {
+    text-align: center;
+    font-size: 0.9em;
+    line-height: 1.2;
+}
+
+/* Size variations */
+.materials-content[data-size="small"] {
+    font-size: 0.8em;
+}
+
+.materials-content[data-size="medium"] {
+    font-size: 1em;
+}
+
+.materials-content[data-size="large"] {
+    font-size: 1.2em;
+}
+
+.materials-content[data-size="x-large"] {
+    font-size: 1.4em;
+}
+
+/* Settings modal material entry styles */
+.material-entry {
+    background: #f8f9fa;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+/* Add to Materials Widget Styles */
+.material-item {
+    position: relative;
+}
+
+.material-quick-edit {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.material-item:hover .material-quick-edit {
+    opacity: 1;
+}
+
+.material-quick-edit .btn-link {
+    padding: 0.25rem;
+    font-size: 0.8em;
+    color: #6c757d;
+}
+
+.material-quick-edit .btn-link:hover {
+    color: var(--primary-color);
+}
+
+/* Announcements Widget Styles */
+.announcement-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+
+.announcement-title {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.announcement-display {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.announcement-text {
+    flex-grow: 1;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.announcement-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #dee2e6;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.indicator.active {
+    background: var(--primary-color);
+    transform: scale(1.2);
+}
+
+/* Rich text editor styles */
+.announcement-editor {
+    min-height: 100px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* Rich text editor toolbar styles */
+.rich-text-toolbar {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.toolbar-group {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0 0.5rem;
+    border-right: 1px solid #dee2e6;
+}
+
+.toolbar-group:last-child {
+    border-right: none;
+}
+
+.rich-text-toolbar .btn-link {
+    color: #495057;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.rich-text-toolbar .btn-link:hover {
+    background-color: #e9ecef;
+}
+
+.rich-text-toolbar .btn-link.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.text-color-picker {
+    width: 32px;
+    height: 32px;
+    padding: 2px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.text-color-picker::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.text-color-picker::-webkit-color-swatch {
+    border: none;
+    border-radius: 2px;
+}
+
+/* Make sure buttons align properly */
+.rich-text-toolbar .btn-group {
+    display: flex;
+    gap: 0.25rem;
+}
+
+/* Hover and active states */
+.rich-text-toolbar .btn:hover {
+    background-color: var(--accent-light);
+    border-color: var(--primary-color);
+}
+
+.rich-text-toolbar .btn:active,
+.rich-text-toolbar .btn.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    padding: 1rem;
+}
+
+.emoji-btn {
+    font-size: 1.5em;
+    padding: 0.5rem;
+}
+
+/* Size variations */
+.announcement-content[data-size="small"] {
+    font-size: 0.8em;
+}
+
+.announcement-content[data-size="medium"] {
+    font-size: 1em;
+}
+
+.announcement-content[data-size="large"] {
+    font-size: 1.2em;
+}
+
+.announcement-content[data-size="x-large"] {
+    font-size: 1.4em;
+}
+
+/* Add to Announcements Widget Styles */
+.announcement-tabs .nav-tabs {
+    border-bottom: none;
+}
+
+.announcement-tabs .nav-link {
+    padding: 0.5rem 1rem;
+    border: 1px solid #dee2e6;
+    border-bottom: none;
+    border-radius: 0.25rem 0.25rem 0 0;
+    margin-right: 0.25rem;
+}
+
+.announcement-tabs .nav-link.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.announcement-tabs .tab-content {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 0 0 0.25rem 0.25rem;
+    padding: 1rem;
+}
+
+.announcement-tabs .tab-pane {
+    padding: 0.5rem;
+}
+
+/* Add to Announcements Widget Styles */
+#emoji-picker-container {
+    position: absolute;
+    z-index: 9999;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.picmo__picker {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    --accent-color: var(--primary-color);
+    --hover-color: var(--accent-light);
+    --border-radius: 8px;
+}
+
+.picmo__categoryTab {
+    color: #6c757d;
+}
+
+.picmo__categoryTab--selected {
+    color: var(--primary-color);
+}
+
+.picmo__searchContainer input {
+    border-color: #dee2e6;
+}
+
+.picmo__searchContainer input:focus {
+    border-color: var(--primary-color);
+}
+
+.emoji-mart {
+    font-family: inherit !important;
+}
+
+.emoji-mart-scroll {
+    height: 270px;
+}
+
+.emoji-mart-search {
+    padding: 0.5rem;
+}
+
+.emoji-mart-search input {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 0.375rem 0.75rem;
+}
+
+.emoji-mart-category-label {
+    font-size: 0.875rem;
+    padding: 0.5rem;
+    color: #6c757d;
+}
+
+/* Emoji Picker Styles */
+#emoji-picker-container {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.emoji-picker {
+    --emoji-size: 1.5rem;
+    --emoji-padding: 0.5rem;
+    --category-name-size: 0.9rem;
+    --category-name-padding: 0.5rem;
+    --input-size: 0.9rem;
+    --input-padding: 0.5rem;
+    height: 300px;
+}
+
+.emoji-picker__emojis {
+    grid-template-columns: repeat(8, 1fr);
+}
+
+.emoji-picker__emoji {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.emoji-picker__emoji:hover {
+    background: var(--accent-light);
+}
+
+.emoji-picker {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.emoji-picker__content {
+    padding: 0.5rem;
+}
+
+.emoji-picker__preview {
+    border-top: 1px solid #dee2e6;
+}
+
+.emoji-picker__search {
+    margin: 0.5rem;
+}
+
+.emoji-picker__search-input {
+    font-size: 0.9rem !important;
+    padding: 0.375rem 0.75rem !important;
+}
+
+.emoji-picker__tabs {
+    padding: 0 0.5rem;
+}
+
+.emoji-picker__category-buttons {
+    margin-bottom: 0.5rem;
+}
+
+/* Space movement controls */
+.space-item-controls .move-space-up,
+.space-item-controls .move-space-down {
+    padding: 0.25rem;
+    color: #6c757d;
+    opacity: 0;
+    transition: opacity 0.2s, color 0.2s;
+}
+
+.space-item:hover .space-item-controls .move-space-up,
+.space-item:hover .space-item-controls .move-space-down {
+    opacity: 1;
+}
+
+.space-item-controls .move-space-up:hover,
+.space-item-controls .move-space-down:hover {
+    color: var(--primary-color);
+}
+
+.space-item-controls .move-space-up:disabled,
+.space-item-controls .move-space-down:disabled {
+    opacity: 0 !important;
+    cursor: default;
+}
+
+/* Adjust spacing between controls */
+.space-item-controls {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+}
+
+/* Homework Widget Styles */
+.homework-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+
+.homework-title {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.homework-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 0.5rem;
+}
+
+.homework-item {
+    background: #f8f9fa;
+    border-radius: 4px;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.homework-item:last-child {
+    margin-bottom: 0;
+}
+
+.homework-item.overdue {
+    border-left: 3px solid #dc3545;
+}
+
+.homework-item.completed {
+    opacity: 0.7;
+}
+
+.homework-item-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.homework-checkbox {
+    padding-top: 0.25rem;
+}
+
+.homework-title-area {
+    flex-grow: 1;
+}
+
+.homework-assignment-title {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.homework-due-date {
+    font-size: 0.85em;
+    color: #6c757d;
+}
+
+.homework-controls {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.homework-item:hover .homework-controls {
+    opacity: 1;
+}
+
+.homework-description {
+    font-size: 0.9em;
+    color: #6c757d;
+    padding-left: 2rem;
+}
+
+.overdue-badge {
+    background: #dc3545;
+    color: white;
+    font-size: 0.75em;
+    padding: 0.25em 0.5em;
+    border-radius: 3px;
+    margin-left: 0.5rem;
+}
+
+/* Size variations */
+.homework-content[data-size="small"] {
+    font-size: 0.8em;
+}
+
+.homework-content[data-size="medium"] {
+    font-size: 1em;
+}
+
+.homework-content[data-size="large"] {
+    font-size: 1.2em;
+}
+
+.homework-content[data-size="x-large"] {
+    font-size: 1.4em;
+}
+
+/* Objective Widget Styles */
+.objective-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+
+.objective-title {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.objective-display {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.objective-display p {
+    margin-bottom: 0.5rem;
+}
+
+.objective-display ul,
+.objective-display ol {
+    padding-left: 1.5rem;
+}
+
+/* Rich text editor styles */
+.objective-editor {
+    width: 100%;
+    min-height: 150px;
+    padding: 1rem;
+    margin-top: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    background: white;
+}
+
+.objective-editor:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(46, 196, 182, 0.25);
+}
+
+/* Make sure the modal is wide enough */
+.swal2-popup.swal2-modal {
+    width: 600px;
+    padding: 2rem;
+}
+
+.swal2-html-container {
+    margin: 1rem 0;
+}
+
+/* Style lists within the editor */
+.objective-editor ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+}
+
+.objective-editor ol {
+    list-style-type: decimal;
+    margin-left: 1.5rem;
+}
+
+.objective-editor li {
+    margin: 0.25rem 0;
+}
+
+/* Bell Ringer Widget Styles */
+.bellringer-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+
+.bellringer-title {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.bellringer-display {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.bellringer-display p {
+    margin-bottom: 0.5rem;
+}
+
+.bellringer-display ul,
+.bellringer-display ol {
+    padding-left: 1.5rem;
+}
+
+/* Size variations */
+.bellringer-content[data-size="small"] {
+    font-size: 0.8em;
+}
+
+.bellringer-content[data-size="medium"] {
+    font-size: 1em;
+}
+
+.bellringer-content[data-size="large"] {
+    font-size: 1.2em;
+}
+
+.bellringer-content[data-size="x-large"] {
+    font-size: 1.4em;
+}
+
+/* Remove the old button styles */
+.edit-objective-btn,
+.edit-bellringer-btn,
+.add-homework-btn {
+    color: #6c757d;
+    transition: color 0.2s ease;
+}
+
+.edit-objective-btn:hover,
+.edit-bellringer-btn:hover,
+.add-homework-btn:hover {
+    color: var(--primary-color);
+}
+
+/* Update widget controls spacing */
+.widget-controls {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.widget-controls .btn-link {
+    padding: 0.25rem;
+    color: #6c757d;
+}
+
+.widget-controls .btn-link:hover {
+    color: var(--primary-color);
+}
+
+/* Widget remove button hover style */
+.widget-remove:hover {
+    color: #dc3545 !important; /* Bootstrap's danger color */
+}
+
+/* Optional: Add transition for smooth color change */
+.widget-remove {
+    transition: color 0.2s ease !important;
+}
+
+/* Add Space button styles */
+#addSpaceBtn {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+#addSpaceBtn:hover {
+    background-color: #25a093;  /* Slightly darker shade of our theme color */
+    border-color: #25a093;
+}
+
+/* Weather Widget Header Styles */
+.weather-widget .widget-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.9);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+    padding: 0.5rem;
+    border-bottom: none;  /* Remove the default border */
+}
+
+.weather-widget:hover .widget-header {
+    opacity: 1;
+}
+
+/* Adjust content padding to account for hidden header */
+.weather-widget .widget-content {
+    padding-top: 0.5rem;
+}
+
+/* Make sure the widget is draggable from anywhere */
+.weather-widget {
+    cursor: move;
+}
+
+/* Original Weather Widget Styles */
+.weather-widget .widget-content {
+    text-align: center;
+    padding: 1rem;
+}
+
+.weather-widget .location {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.weather-widget .weather-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.weather-widget .temperature {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.weather-widget .description {
+    text-transform: capitalize;
+    margin: 0.5rem 0;
+}
+
+.weather-widget .details {
+    font-size: 0.9em;
+    margin-top: 1rem;
+}
+
+/* Hide all widget headers by default and show on hover */
+.widget .widget-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 100;
+    padding: 0.25rem;
+    border-bottom: none;
+    cursor: move; /* Keep move cursor on header only */
+}
+
+.widget:hover .widget-header {
+    opacity: 1;
+}
+
+/* Adjust content to account for hidden header */
+.widget .widget-content {
+    padding-top: 0.25rem;
+}
+
+/* Base sidebar styles */
+.sidebar {
+    width: 250px;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+/* Collapsed state - increased width */
+.sidebar.collapsed {
+    width: 75px; /* Increased from 60px to 75px for better icon visibility */
+}
+
+/* Hide elements in collapsed state */
+.sidebar.collapsed .school-info {
+    display: none;
+}
+
+/* Space list and items */
+.sidebar.collapsed .learning-spaces-list {
+    display: block !important;
+    padding: 0.5rem 0;
+}
+
+.space-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    position: relative;
+}
+
+.space-name {
+    display: flex;
+    align-items: center;
+    width: 100%; /* Added to ensure proper width */
+}
+
+/* Icon styles */
+.space-icon {
+    margin-right: 0.75rem;
+    font-size: 1.2em;
+    color: var(--primary-color);
+}
+
+/* Collapsed state specifics */
+.sidebar.collapsed .space-item {
+    justify-content: center;
+    padding: 0.5rem;  /* Added horizontal padding */
+}
+
+.sidebar.collapsed .space-text,
+.sidebar.collapsed .space-item-controls {
+    display: none !important;
+}
+
+.sidebar.collapsed .space-icon {
+    margin: 0;
+    font-size: 1.4em;
+}
+
+/* Active and hover states */
+.space-item.active .space-icon {
+    color: var(--primary-color);
+}
+
+.space-item:hover .space-icon {
+    color: #25a093;
+}
+
+/* Tooltip */
+.sidebar.collapsed .space-item:hover::after {
+    content: attr(data-name);
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    margin-left: 0.5rem;
+    font-size: 0.9em;
+    white-space: nowrap;
+    z-index: 1000;
+}
+
+/* Emoji styles */
+.space-emoji {
+    margin-right: 0.75rem;
+    font-size: 1.4em;
+}
+
+/* Collapsed state specifics */
+.sidebar.collapsed .space-item {
+    justify-content: center;
+    padding: 0.5rem;
+}
+
+.sidebar.collapsed .space-text,
+.sidebar.collapsed .space-item-controls {
+    display: none !important;
+}
+
+.sidebar.collapsed .space-emoji {
+    margin: 0;
+    font-size: 1.6em;
+}
+
+/* Active and hover states */
+.space-item.active .space-emoji {
+    opacity: 1;
+}
+
+.space-item:hover .space-emoji {
+    opacity: 0.8;
+}
+
+/* Toggle button styles */
+.sidebar-toggle {
+    position: absolute;
+    right: -16px;
+    top: 20px;
+    width: 32px;
+    height: 32px;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-toggle:hover {
+    background: #25a093;
+}
+
+.sidebar-toggle i {
+    font-size: 1.2em;
+    transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed .sidebar-toggle i {
+    transform: rotate(180deg);
+}
+
+/* Optional: Add a subtle animation when hovering */
+.sidebar-toggle:hover i {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+} 
+
+/* Timer Widget Styles */
+.timer-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.timer-title {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.timer-display {
+    font-family: monospace;
+    font-weight: bold;
+    margin: 1rem 0;
+    transition: font-size 0.2s ease;
+}
+
+.timer-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* Size variations */
+.timer-content[data-size="small"] .timer-display {
+    font-size: 2em;
+}
+
+.timer-content[data-size="medium"] .timer-display {
+    font-size: 3em;
+}
+
+.timer-content[data-size="large"] .timer-display {
+    font-size: 4em;
+}
+
+.timer-content[data-size="x-large"] .timer-display {
+    font-size: 5em;
+}
+
+/* Add to Timer Widget Styles */
+.timer-display .time-edit {
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.timer-display .time-edit:hover {
+    background-color: rgba(46, 196, 182, 0.1);
+}
+
+/* Don't show hover effect when timer is running */
+.timer-widget.running .time-edit {
+    cursor: default;
+}
+
+.timer-widget.running .time-edit:hover {
+    background-color: transparent;
+}
+
+/* Sticky Note Widget Styles */
+.stickynote-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stickynote-title {
+    font-weight: 500;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.stickynote-display {
+    flex-grow: 1;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-y: auto;
+}
+
+.stickynote-editor {
+    min-height: 300px;
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    margin-top: 1rem;
+    background: white;
+}
+
+.stickynote-editor:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(46, 196, 182, 0.25);
+}
+
+.edit-stickynote {
+    align-self: center;
+}
+
+/* Rich text toolbar styles */
+.rich-text-toolbar {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.toolbar-group {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0 0.5rem;
+    border-right: 1px solid #dee2e6;
+}
+
+.toolbar-group:last-child {
+    border-right: none;
+}
+
+.rich-text-toolbar .btn-link {
+    color: #495057;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.rich-text-toolbar .btn-link:hover {
+    background-color: #e9ecef;
+}
+
+.rich-text-toolbar .btn-link.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.text-color-picker {
+    width: 32px;
+    height: 32px;
+    padding: 2px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.text-color-picker::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.text-color-picker::-webkit-color-swatch {
+    border: none;
+    border-radius: 2px;
+}
+
+/* Wide popup for editor */
+.wide-popup {
+    max-width: 800px !important;
+}
+
+/* Add to the existing rich text toolbar styles */
+.editor-container {
+    padding: 0 !important;
+}
+
+.stickynote-editor {
+    min-height: 300px;
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    margin: 1rem;
+    background: white;
+}
+
+.stickynote-editor:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(46, 196, 182, 0.25);
+}
+
+/* Style lists within the editor */
+.stickynote-editor ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+}
+
+.stickynote-editor ol {
+    list-style-type: decimal;
+    margin-left: 1.5rem;
+}
+
+.stickynote-editor li {
+    margin: 0.25rem 0;
+}
+
+/* Color picker styles */
+.highlight-color-picker {
+    width: 32px;
+    height: 32px;
+    padding: 2px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.highlight-color-picker::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.highlight-color-picker::-webkit-color-swatch {
+    border: none;
+    border-radius: 2px;
+}
+
+/* Rich text toolbar container for multiple rows */
+.rich-text-toolbar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.rich-text-toolbar {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+    justify-content: center;
+}
+
+.toolbar-group {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0 0.5rem;
+    border-right: 1px solid #dee2e6;
+}
+
+.toolbar-group:last-child {
+    border-right: none;
+}
+
+/* Emoji Picker Styles */
+emoji-picker {
+    --background: #ffffff;
+    --border-color: #dee2e6;
+    --category-emoji-padding: 0.5rem;
+    --category-emoji-size: 1.25rem;
+    --category-font-size: 0.9rem;
+    --font-family: inherit;
+    --num-columns: 8;
+    --outline-color: var(--primary-color);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+}
+
+/* Objective Editor Styles */
+.objective-editor {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 1rem;
+    background: white;
+}
+
+.objective-editor:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(46, 196, 182, 0.25);
+}
+
+/* Style the toolbar buttons */
+.btn-group .btn-outline-secondary {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.btn-group .btn-outline-secondary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* Bell Ringer Editor Styles */
+.bellringer-editor {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 1rem;
+    background: white;
+}
+
+.bellringer-editor:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(46, 196, 182, 0.25);
+}
+
+/* Timetable Widget Styles */
+.timetable-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+
+.timetable-title {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.timetable-display {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+}
+
+.current-schedule {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.current-period, .next-period {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-left: 3px solid var(--primary-color);
+    background: white;
+}
+
+.current-period h5, .next-period h5 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.upcoming-period {
+    padding: 0.25rem 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.upcoming-period:last-child {
+    border-bottom: none;
+}
+
+.full-schedule {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.full-schedule h5 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.period-item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid #dee2e6;
+    align-items: center;
+}
+
+.period-item:last-child {
+    border-bottom: none;
+}
+
+.period-time {
+    min-width: 60px;
+    font-weight: 500;
+}
+
+.period-name {
+    min-width: 100px;
+    font-weight: 500;
+}
+
+.period-subject {
+    flex-grow: 1;
+    color: #6c757d;
+}
+
+/* Size variations */
+.timetable-content[data-size="small"] {
+    font-size: 0.8em;
+}
+
+.timetable-content[data-size="medium"] {
+    font-size: 1em;
+}
+
+.timetable-content[data-size="large"] {
+    font-size: 1.2em;
+}
+
+.timetable-content[data-size="x-large"] {
+    font-size: 1.4em;
+}
+
+/* Editor styles */
+.timetable-editor {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.period-entry {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.period-entry h6 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Update Timetable Widget Styles */
+.current-status {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+.status-scroll {
+    display: inline-block;
+    animation: scroll-left 20s linear infinite;
+    white-space: nowrap;
+    padding-right: 2rem;
+}
+
+.status-scroll span {
+    display: inline-block;
+}
+
+.status-scroll .separator {
+    margin: 0 1rem;
+    opacity: 0.7;
+}
+
+@keyframes scroll-left {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+.timetable-display {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.full-schedule {
+    background: #f8f9fa;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+/* Keep the rest of the timetable styles the same */
+
+/* Timetable Editor Styles */
+.timetable-editor {
+    padding-top: 1rem;
+}
+
+.timetable-editor .nav-tabs {
+    margin-bottom: 1rem;
+}
+
+.timetable-editor .tab-content {
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+}
+
+.day-schedule {
+    padding: 1rem;
+}
+
+/* Student Manager Styles */
+.student-list-container {
+    max-height: 400px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.75rem;
+    padding: 0.75rem;
+}
+
+.student-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background: white;
+    text-align: center;
+    aspect-ratio: 1;
+    position: relative;
+}
+
+.student-item:hover {
+    background: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.student-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    padding: 2px;
+    background: white;
+    object-fit: cover;
+    margin-bottom: 0.75rem;
+}
+
+.student-info {
+    margin-bottom: 0.75rem;
+}
+
+.student-name {
+    font-weight: 500;
+    font-size: 1em;
+    margin-bottom: 0.25rem;
+}
+
+.student-details {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.student-actions {
+    display: flex;
+    gap: 0.5rem;
+    position: absolute;
+    bottom: 0.75rem;
+}
+
+.student-actions .btn-link {
+    padding: 0.25rem;
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.student-actions .btn-link:hover {
+    color: var(--primary-color);
+}
+
+/* Class Manager Styles */
+.class-list-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.class-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    background: white;
+}
+
+.class-item:hover {
+    background: #f8f9fa;
+}
+
+.class-info {
+    flex-grow: 1;
+}
+
+.class-name {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.class-details {
+    font-size: 0.875rem;
+}
+
+.class-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.class-actions .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.class-actions .btn-link {
+    padding: 0.25rem;
+}
+
+/* Tab styles */
+.nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 1rem;
+}
+
+.nav-tabs .nav-link {
+    margin-bottom: -1px;
+    border: 1px solid transparent;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    color: #6c757d;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary-color);
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.tab-content {
+    padding: 1rem 0;
+}
+
+/* Achievement Styles */
+.achievements-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.achievement-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    background: white;
+}
+
+.achievement-item:hover {
+    background: #f8f9fa;
+}
+
+.achievement-info {
+    flex-grow: 1;
+}
+
+.achievement-title {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.achievement-title i {
+    margin-right: 0.5rem;
+}
+
+.achievement-details {
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.achievement-details .badge {
+    margin-left: 0.5rem;
+}
+
+.achievement-description {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.achievement-actions {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.student-of-week {
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 4px;
+    padding: 1rem;
+}
+
+.student-of-week h6 {
+    color: #856404;
+    margin-bottom: 0.5rem;
+}
+
+.student-of-week i {
+    margin-right: 0.5rem;
+}
+
+.award-details {
+    font-size: 0.875rem;
+}
+
+/* Avatar Selection Styles */
+.avatar-selection {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.current-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid var(--primary-color);
+    padding: 2px;
+    background: white;
+    object-fit: cover;
+}
+
+.avatar-options {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.photo-upload-preview {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 2px dashed #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.photo-upload-preview:hover {
+    border-color: var(--primary-color);
+    background: rgba(46, 196, 182, 0.05);
+}
+
+/* Student Profile Styles */
+.student-profile {
+    padding: 0;
+    background: #fff;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+    background: #f8f9fa;
+}
+
+.student-profile-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    padding: 2px;
+    background: white;
+    object-fit: cover;
+}
+
+.profile-header-info h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #2c3e50;
+}
+
+.profile-meta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.25rem;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.profile-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.profile-content {
+    padding: 1.5rem;
+}
+
+.profile-section {
+    margin-bottom: 1.5rem;
+}
+
+.profile-section:last-child {
+    margin-bottom: 0;
+}
+
+.section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.info-item.full-width {
+    grid-column: 1 / -1;
+}
+
+.info-item label {
+    font-size: 0.875rem;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-item span {
+    color: #2c3e50;
+}
+
+.notes-content {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+    color: #2c3e50;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* Attendance Styles */
+.attendance-manager {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.attendance-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.attendance-item:last-child {
+    border-bottom: none;
+}
+
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.student-avatar-sm {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.attendance-status {
+    width: 120px;
+}
+
+.attendance-select {
+    width: 100%;
+}
+
+.attendance-report {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.attendance-report .table {
+    margin-bottom: 0;
+}
+
+.attendance-report th {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+}
+
+/* Attendance Classes List */
+.attendance-classes {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.attendance-class-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.attendance-class-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.class-info {
+    flex: 1;
+}
+
+.class-info .class-name {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #2c3e50;
+}
+
+.class-info .class-meta {
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.attendance-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.attendance-actions .btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Update the attendance-manager styles */
+.attendance-manager .btn-outline-secondary {
+    border-color: #dee2e6;
+}
+
+.attendance-manager .btn-outline-secondary:hover {
+    background-color: #f8f9fa;
+    border-color: #c1c9d0;
+}
+
+.attendance-manager .attendance-date {
+    flex: 1;
+    margin: 0 1rem;
+}
+
+.attendance-manager .attendance-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Attendance Manager Header Styles */
+.attendance-header {
+    border-bottom: 1px solid #e9ecef;
+    margin: -1rem -1rem 1rem -1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+}
+
+.back-button {
+    color: #495057;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    background: white;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.back-button:hover {
+    color: var(--primary-color);
+    text-decoration: none;
+    background: #f8f9fa;
+    border-color: #dee2e6;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    transform: translateY(-1px);
+}
+
+.back-button i {
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+}
+
+.back-button:hover i {
+    transform: translateX(-2px);
+}
+
+/* Achievement Styles */
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.achievement-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.achievement-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.achievement-icon {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    background: #f8f9fa;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.medal-icon {
+    position: relative;
+    display: inline-flex;
+}
+
+.medal-icon.bronze { color: #CD7F32; }
+.medal-icon.silver { color: #C0C0C0; }
+.medal-icon.gold { color: #FFD700; }
+.medal-icon.platinum { color: #E5E4E2; }
+
+.achievement-content {
+    flex: 1;
+}
+
+.achievement-title {
+    margin: 0;
+    font-size: 1rem;
+    color: #2c3e50;
+}
+
+.achievement-date {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+.achievement-description {
+    font-size: 0.875rem;
+    color: #495057;
+    margin-top: 0.5rem;
+}
+
+.achievement-form .form-label {
+    font-weight: 500;
+}
+
+/* Achievements Dashboard Styles */
+.achievements-dashboard {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.class-achievements-section {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+}
+
+.class-achievements-section .class-name {
+    color: var(--primary-color);
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.student-achievement-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.student-achievement-row:last-child {
+    border-bottom: none;
+}
+
+.student-achievement-row .student-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.student-achievement-row .student-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.student-achievement-row .student-name {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.student-achievement-row .achievement-count {
+    font-size: 0.875rem;
+}
+
+.student-achievement-row .achievement-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.student-avatar-sm {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    padding: 2px;
+    background: white;
+}
+
+/* Achievement Card Styles */
+.achievement-icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.achievement-icon {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    background: #f8f9fa;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.medal-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.achievement-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.achievement-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Spark Points Styles */
+.spark-points-grid {
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.students-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.student-spark-card {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 0.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    text-align: center;
+}
+
+.student-info-compact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.avatar-container {
+    position: relative;
+    display: inline-block;
+}
+
+.student-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+}
+
+.points-badge {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    background: #ffd700;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #2c3e50;
+    border: 2px solid white;
+    transition: transform 0.2s;
+}
+
+.points-badge.points-updated {
+    animation: badgePulse 0.5s ease-out;
+}
+
+.student-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #2c3e50;
+    margin: 0;
+}
+
+@keyframes badgePulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Update the grid to show more students */
+.students-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.75rem;
+    padding: 0.5rem;
+}
+
+/* Update the spark animation to work with new layout */
+.spark-animation {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    color: #ffd700;
+    animation: sparkFloat 1s ease-out forwards;
+    pointer-events: none;
+    z-index: 10;
+}
+
+@keyframes sparkFloat {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -100%) scale(1.5);
+    }
+}
+
+.student-spark-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #f8f9fa; /* Subtle hover effect */
+}
+
+/* Remove the quick-add-sparks section since we're not using it anymore */
+.quick-add-sparks {
+    display: none;
+}
+
+/* Keypad styles */
+.points-keypad-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.points-keypad {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 0 auto;
+}
+
+.btn-spark-large {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: none;
+    color: white;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.btn-spark-large.add {
+    background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+}
+
+.btn-spark-large.remove {
+    background: linear-gradient(45deg, #ff6b6b 0%, #ff8787 99%, #ff8787 100%);
+}
+
+.btn-spark-large:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.btn-spark-large.add:hover {
+    background: linear-gradient(45deg, #ff8a8e 0%, #f9c0b4 99%, #f9c0b4 100%);
+}
+
+.btn-spark-large.remove:hover {
+    background: linear-gradient(45deg, #ff5b5b 0%, #ff7777 99%, #ff7777 100%);
+}
+
+.btn-spark-large:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Swal specific styles for the keypad modal */
+.swal2-popup.swal2-modal {
+    padding-bottom: 2rem;
+}
+
+.swal2-title {
+    font-size: 1.25rem !important;
+    padding: 1rem !important;
+}
+
+.student-spark-card .student-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.student-spark-card .student-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+}
+
+.total-sparks {
+    color: #ffd700;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.recent-sparks {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.spark-record {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.spark-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: #ffd700;
+    animation: sparkFloat 1s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes sparkFloat {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -150%) scale(1.5);
+    }
+}
+
+/* Space Footer and Spark Points Panel */
+.space-footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 250px; /* Match sidebar width */
+    background: white;
+    border-top: 1px solid #dee2e6;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.spark-points-panel {
+    position: relative;
+    transition: height 0.3s ease;
+    height: 50px; /* Height when collapsed */
+    background: white;
+}
+
+.spark-points-panel.expanded {
+    height: 60vh; /* Height when expanded */
+}
+
+.spark-points-toggle {
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.spark-points-content {
+    position: absolute;
+    top: 50px; /* Height of toggle section */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    padding: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.spark-points-panel.expanded .spark-points-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Adjust main content to account for footer */
+.content {
+    padding-bottom: 50px; /* Match collapsed panel height */
+}
+
+/* When sidebar is collapsed */
+.sidebar.collapsed + .content .space-footer {
+    left: 50px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .space-footer {
+        left: 0;
+    }
+}
+
+/* Spark Points History Styles */
+.spark-points-summary {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #2c3e50;
+    margin-top: 0.5rem;
+}
+
+.spark-points-list {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
+.spark-history-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid #f8f9fa;
+    gap: 1rem;
+    font-size: 0.85rem; /* Reduced base font size */
+}
+
+.spark-details {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Reduced gap */
+}
+
+.spark-amount {
+    font-weight: 500;
+    color: #2ec4b6;
+    font-size: 0.9rem; /* Slightly larger than base for emphasis */
+}
+
+.spark-category {
+    color: #6c757d;
+    font-size: 0.8rem; /* Smaller than the points */
+}
+
+.spark-space {
+    text-align: center;
+    color: #6c757d;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.spark-time {
+    text-align: right;
+    color: #6c757d;
+    font-size: 0.75rem; /* Smallest text size for date */
+}
+
+.spark-amount.positive {
+    color: #2ec4b6;
+}
+
+.spark-amount.negative {
+    color: #ff6b6b;
+}
+  

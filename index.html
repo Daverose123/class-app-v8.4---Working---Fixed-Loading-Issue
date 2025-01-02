@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Hub</title>
+    
+    <!-- CSS Libraries -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+    <link href="styles/dashboard.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+
+    <!-- Add these before </head> -->
+    <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js" type="module"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation Bar -->
+        <nav id="sidebar" class="sidebar">
+            <button class="sidebar-toggle">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="sidebar-header">
+                <div class="school-info">
+                    <div class="school-logo">
+                        <!-- Changed ID for sidebar logo -->
+                        <img src="" alt="School Logo" id="sidebarSchoolLogo" class="img-fluid">
+                    </div>
+                    <div class="school-details">
+                        <!-- Changed IDs for sidebar text -->
+                        <h3 id="sidebarSchoolName">Class Hub</h3>
+                        <div id="sidebarClassName" class="class-name"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="learning-spaces-list">
+                <!-- Learning spaces will be added here -->
+            </div>
+            <div class="sidebar-footer">
+                <button id="addSpaceBtn" class="btn btn-primary" data-title="Add Space">
+                    <i class="fas fa-plus"></i>
+                    <span>Add Space</span>
+                </button>
+                <button id="settingsBtn" class="btn btn-secondary" data-title="Settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div id="content" class="content">
+            <!-- Learning spaces content will be displayed here -->
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Base Widget must load first -->
+    <script src="js/widgets/baseWidget.js"></script>
+
+    <!-- Then load all widget implementations -->
+    <script src="js/widgets/clockWidget.js"></script>
+    <script src="js/widgets/weatherWidget.js"></script>
+    <script src="js/widgets/materialsWidget.js"></script>
+    <script src="js/widgets/announcementWidget.js"></script>
+    <script src="js/widgets/homeworkWidget.js"></script>
+    <script src="js/widgets/objectiveWidget.js"></script>
+    <script src="js/widgets/bellRingerWidget.js"></script>
+    <script src="js/widgets/timerWidget.js"></script>
+    <script src="js/widgets/stickyNoteWidget.js"></script>
+    <script src="js/widgets/timeTableWidget.js"></script>
+
+    <!-- Services -->
+    <script src="js/services/classService.js"></script>
+    <script src="js/services/emojiPickerService.js"></script>
+    <script src="js/services/studentService.js"></script>
+    <script src="js/services/dashboardService.js"></script>
+    <script src="js/services/attendanceService.js"></script>
+    <script src="js/services/achievementService.js"></script>
+    <script src="js/services/sparkPointService.js"></script>
+    <script src="js/services/validationService.js"></script>
+
+    <!-- Then load the app and space management -->
+    <script src="js/app.js"></script>
+    <script src="js/learningSpace.js"></script>
+
+    <!-- Add before your app scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <!-- Add this before the closing </body> tag -->
+    <script>
+        // Initialize the application
+        $(document).ready(async () => {
+            window.classHub = new ClassHub();
+            await window.classHub.init();
+        });
+    </script>
+</body>
+</html> 
